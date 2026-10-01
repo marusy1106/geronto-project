@@ -32,10 +32,6 @@
 .size{font:12.5px var(--f-mono);color:var(--muted)}
 .emptyf{padding:12px 16px;color:var(--muted);font-size:14px}
 .state{padding:18px;color:var(--muted)}
-.how{counter-reset:h;list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.how li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start}
-.how li::before{counter-increment:h;content:counter(h);width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font:700 13px var(--f-display)}
-.how code{font:13px var(--f-mono);background:var(--bg);padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
@@ -46,13 +42,12 @@
   <a href="documents.html" aria-current="page">Документы</a>
   <span class="sep" aria-hidden="true"></span>
   <a href="#lib">Библиотека</a>
-  <a href="#how">Как загрузить файл</a>
 </nav>
 
 <header class="hero">
   <div class="eyebrow">Папка docs в репозитории проекта</div>
   <h1>Документы проекта</h1>
-  <p>Список строится автоматически из папки <code>docs</code> репозитория на GitHub. Загрузите файл в нужную папку, и через минуту он появится здесь. Шаблоны протоколов лежат на странице <a href="registration.html#templates">«Регистрация МИ»</a>.</p>
+  <p>Список строится автоматически из папки <code>docs</code> репозитория на GitHub. Шаблоны протоколов лежат на странице <a href="registration.html#templates">«Регистрация МИ»</a>.</p>
 </header>
 
 <section id="lib">
@@ -63,20 +58,6 @@
   <div id="lib-list" style="display:grid;gap:12px"><div class="panel state">Загружаю список документов…</div></div>
 </section>
 
-<section id="how">
-  <div class="eyebrow">Для участников с доступом к репозиторию</div>
-  <h2>Как загрузить файл</h2>
-  <div class="panel">
-    <ol class="how">
-      <li><span>Нажмите «Загрузить сюда» у нужной папки выше. Откроется GitHub, войдите в аккаунт.</span></li>
-      <li><span>Перетащите файлы в окно или нажмите «choose your files».</span></li>
-      <li><span>Внизу нажмите зелёную кнопку <b>Commit changes</b>.</span></li>
-      <li><span>Через 1–2 минуты обновите эту страницу, и файл появится в списке.</span></li>
-      <li><span>Чтобы создать новую папку: в репозитории нажмите Add file → Create new file и введите имя вида <code>docs/11_Новая_папка/README.md</code>. Первая строка файла станет описанием папки.</span></li>
-    </ol>
-    <p class="lead" style="margin-top:14px;font-size:14px">Репозиторий публичный, поэтому всё, что в нём лежит, может увидеть любой человек. Не загружайте персональные данные пациентов, документы с подписями и контактами, а также неопубликованные материалы для патентов.</p>
-  </div>
-</section>
 </div>
 
 <script>
@@ -122,8 +103,7 @@ function render(){
     const files=f.files.filter(x=>!q||x.name.toLowerCase().includes(q)).sort((a,b)=>a.name.localeCompare(b.name,'ru',{numeric:true}));
     total+=files.length;
     if(q&&!files.length) return '';
-    return `<div class="folder"><div class="folder-h"><span class="t"><h3>${esc(pretty(f.name))}</h3>${f.desc?`<small>${esc(f.desc)}</small>`:''}</span>
-      <a class="btn" href="https://github.com/${OWNER}/${REPO}/upload/${BRANCH}/${enc(f.path)}">Загрузить сюда</a></div>
+    return `<div class="folder"><div class="folder-h"><span class="t"><h3>${esc(pretty(f.name))}</h3>${f.desc?`<small>${esc(f.desc)}</small>`:''}</span></div>
       ${files.length?`<ul class="files">${files.map(x=>`<li><a href="${enc(x.path)}" target="_blank" rel="noopener"><span class="ext ${esc(x.ext)}">${esc(x.ext)}</span><span class="fname">${esc(x.name.replace(/\.[^.]+$/,'').replace(/_/g,' '))}</span><span class="size">${size(x.size)}</span></a></li>`).join('')}</ul>`:'<div class="emptyf">Пока пусто</div>'}</div>`}).join('');
   document.getElementById('lib-list').innerHTML=html||'<div class="panel state">Ничего не найдено.</div>';
   document.getElementById('count').textContent=`Файлов: ${total}`;
