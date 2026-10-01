@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Геронтостоматология: документы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.toolbar input{flex:1 1 260px;min-width:0;font:15px var(--f-body);padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.toolbar input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.count{color:var(--muted);font-size:13px}
+.folder{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.folder-h{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line)}
+.folder-h .t{display:grid;gap:2px;min-width:0}
+.folder-h small{color:var(--muted);font-size:13px}
+.btn{font:500 13px var(--f-body);text-decoration:none;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.btn:hover{background:var(--accent-soft)}
+.files{list-style:none;margin:0;padding:0}
+.files li{border-bottom:1px solid var(--line)}
+.files li:last-child{border-bottom:0}
+.files a{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 16px;text-decoration:none;color:var(--ink)}
+.files a:hover{background:var(--bg)}
+.ext{font:600 11px var(--f-mono);text-transform:uppercase;text-align:center;padding:4px 0;border-radius:5px;background:var(--plan-bg);color:var(--muted)}
+.ext.pdf{background:var(--late-bg);color:var(--late)}
+.ext.docx,.ext.doc{background:var(--pre-bg);color:var(--pre)}
+.ext.xlsx,.ext.xls,.ext.csv{background:var(--done-bg);color:var(--done)}
+.ext.jpg,.ext.jpeg,.ext.png{background:var(--work-bg);color:var(--work)}
+.fname{overflow-wrap:anywhere}
+.size{font:12.5px var(--f-mono);color:var(--muted)}
+.emptyf{padding:12px 16px;color:var(--muted);font-size:14px}
+.state{padding:18px;color:var(--muted)}
+.how{counter-reset:h;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.how li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start}
+.how li::before{counter-increment:h;content:counter(h);width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font:700 13px var(--f-display)}
+.how code{font:13px var(--f-mono);background:var(--bg);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="top" aria-label="Разделы сайта">
+  <a href="index.html">Статус проекта</a>
+  <a href="registration.html">Регистрация МИ</a>
+  <a href="documents.html" aria-current="page">Документы</a>
+  <span class="sep" aria-hidden="true"></span>
+  <a href="#lib">Библиотека</a>
+  <a href="#how">Как загрузить файл</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Папка docs в репозитории проекта</div>
+  <h1>Документы проекта</h1>
+  <p>Список строится автоматически из папки <code>docs</code> репозитория на GitHub. Загрузите файл в нужную папку, и через минуту он появится здесь. Шаблоны протоколов лежат на странице <a href="registration.html#templates">«Регистрация МИ»</a>.</p>
+</header>
+
+<section id="lib">
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Поиск по названию файла" aria-label="Поиск по названию файла">
+    <span class="count" id="count"></span>
+  </div>
+  <div id="lib-list" style="display:grid;gap:12px"><div class="panel state">Загружаю список документов…</div></div>
+</section>
+
+<section id="how">
+  <div class="eyebrow">Для участников с доступом к репозиторию</div>
+  <h2>Как загрузить файл</h2>
+  <div class="panel">
+    <ol class="how">
+      <li><span>Нажмите «Загрузить сюда» у нужной папки выше. Откроется GitHub, войдите в аккаунт.</span></li>
+      <li><span>Перетащите файлы в окно или нажмите «choose your files».</span></li>
+      <li><span>Внизу нажмите зелёную кнопку <b>Commit changes</b>.</span></li>
+      <li><span>Через 1–2 минуты обновите эту страницу, и файл появится в списке.</span></li>
+      <li><span>Чтобы создать новую папку: в репозитории нажмите Add file → Create new file и введите имя вида <code>docs/11_Новая_папка/README.md</code>. Первая строка файла станет описанием папки.</span></li>
+    </ol>
+    <p class="lead" style="margin-top:14px;font-size:14px">Репозиторий публичный, поэтому всё, что в нём лежит, может увидеть любой человек. Не загружайте персональные данные пациентов, документы с подписями и контактами, а также неопубликованные материалы для патентов.</p>
+  </div>
+</section>
+</div>
+
+<script>
+const OWNER='marusy1106', REPO='geronto-project', BRANCH='main', ROOT='docs/';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pretty=n=>n.replace(/^\d+[_\s-]*/,'').replace(/_/g,' ');
+const enc=p=>p.split('/').map(encodeURIComponent).join('/');
+const size=b=>b==null?'':b<1024?b+' Б':b<1048576?(b/1024).toFixed(0)+' КБ':(b/1048576).toFixed(1)+' МБ';
+let folders=[];
+
+async function load(){
+  const el=document.getElementById('lib-list');
+  try{
+    const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,{headers:{Accept:'application/vnd.github+json'}});
+    if(!r.ok) throw new Error(r.status===403?'limit':'http');
+    const data=await r.json();
+    const items=data.tree.filter(t=>t.path.startsWith(ROOT));
+    const map=new Map();
+    items.filter(t=>t.type==='tree'&&t.path.split('/').length===2).forEach(t=>map.set(t.path,{path:t.path,name:t.path.split('/')[1],desc:'',files:[]}));
+    const readmes=[];
+    items.filter(t=>t.type==='blob').forEach(t=>{
+      const parts=t.path.split('/'); const base=parts[parts.length-1];
+      const top=parts.length>2?parts.slice(0,2).join('/'):'docs/_';
+      if(!map.has(top)) map.set(top,{path:top,name:parts.length>2?parts[1]:'Без папки',desc:'',files:[]});
+      if(/^readme\.md$/i.test(base)&&parts.length===3){readmes.push([top,t.path]);return}
+      if(base.startsWith('.')) return;
+      map.get(top).files.push({path:t.path,name:parts.slice(2).join(' / ')||base,size:t.size,ext:(base.split('.').pop()||'').toLowerCase()});
+    });
+    folders=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'ru',{numeric:true}));
+    render();
+    await Promise.all(readmes.map(async([top,p])=>{
+      try{const t=await (await fetch(enc(p))).text();const line=t.split('\n').map(s=>s.replace(/^#+\s*/,'').trim()).find(Boolean);if(line)map.get(top).desc=line}catch(e){}
+    }));
+    render();
+  }catch(e){
+    el.innerHTML=`<div class="panel state">Не удалось получить список с GitHub${e.message==='limit'?' (превышен лимит запросов, попробуйте через час)':''}. Документы можно открыть прямо в <a href="https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/docs">папке docs на GitHub</a>.</div>`;
+  }
+}
+function render(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  let total=0;
+  const html=folders.map(f=>{
+    const files=f.files.filter(x=>!q||x.name.toLowerCase().includes(q)).sort((a,b)=>a.name.localeCompare(b.name,'ru',{numeric:true}));
+    total+=files.length;
+    if(q&&!files.length) return '';
+    return `<div class="folder"><div class="folder-h"><span class="t"><h3>${esc(pretty(f.name))}</h3>${f.desc?`<small>${esc(f.desc)}</small>`:''}</span>
+      <a class="btn" href="https://github.com/${OWNER}/${REPO}/upload/${BRANCH}/${enc(f.path)}">Загрузить сюда</a></div>
+      ${files.length?`<ul class="files">${files.map(x=>`<li><a href="${enc(x.path)}" target="_blank" rel="noopener"><span class="ext ${esc(x.ext)}">${esc(x.ext)}</span><span class="fname">${esc(x.name.replace(/\.[^.]+$/,'').replace(/_/g,' '))}</span><span class="size">${size(x.size)}</span></a></li>`).join('')}</ul>`:'<div class="emptyf">Пока пусто</div>'}</div>`}).join('');
+  document.getElementById('lib-list').innerHTML=html||'<div class="panel state">Ничего не найдено.</div>';
+  document.getElementById('count').textContent=`Файлов: ${total}`;
+}
+document.getElementById('q').addEventListener('input',render);
+load();
+</script>
+</body>
+</html>
